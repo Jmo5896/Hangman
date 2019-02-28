@@ -1,5 +1,23 @@
-"use strict";
+'use strict';
 $(document).ready(() => {
+
+ //firebase stuff=========================================
+  // Initialize Firebase
+  
+  // var config = {
+  //   apiKey: 'AIzaSyAxW2iGmglxkvddLyhztgU1Ar2TCl1GQJQ',
+  //   authDomain: 'hangman-eb602.firebaseapp.com',
+  //   databaseURL: 'https://hangman-eb602.firebaseio.com',
+  //   projectId: 'hangman-eb602',
+  //   storageBucket: '',
+  //   messagingSenderId: '810295666509'
+  // };
+  // firebase.initializeApp(config);
+
+  // let database = firebase.database();
+  // console.log(database);
+  //firebase stuff=========================================
+
   // Variables===========================================
   const letterChoice = [
     'a',
@@ -120,39 +138,41 @@ $(document).ready(() => {
     $('#lettersAndSpaces').text(lettersAndBlanks.join(' '));
     $('#letterCardsInATable').empty();
     nooseToNeck = nooseStartingPoint;
+    jumping = false;
     populateLetterButtons();
-    
   }
   function populateLetterButtons() {
-    
-      //populate buttons inside a table
-      let newTr = $('<tr>');
-     for (let i = 0; i < lettersLeft.length; i++) {      
-
-        if ((i === 0) || ((i % 7) === 0)) {
-          newTr = $('<tr>');
-          newTr.append(`
+    //populate buttons inside a table
+    let newTr = $('<tr>');
+    for (let i = 0; i < lettersLeft.length; i++) {
+      if (i === 0 || i % 7 === 0) {
+        newTr = $('<tr>');
+        newTr.append(`
           <td>
-            <div class="card rounded p-2 mx-auto letters" data-name="${lettersLeft[i]}" data-state="false">
+            <div class="card rounded p-2 mx-auto letters" data-name="${
+              lettersLeft[i]
+            }" data-state="false">
               <div class="card-body" >
                 <h5 class="text-center">${lettersLeft[i].toUpperCase()}</h5>
               </div>
             </div>
           </td>
           `);
-        } else {
-          newTr.append(`
+      } else {
+        newTr.append(`
           <td>
-            <div class="card rounded p-2 mx-auto letters" data-name="${lettersLeft[i]}" data-state="false">
+            <div class="card rounded p-2 mx-auto letters" data-name="${
+              lettersLeft[i]
+            }" data-state="false">
               <div class="card-body" >
                 <h5 class="text-center">${lettersLeft[i].toUpperCase()}</h5>
               </div>
             </div>
           </td>
           `);
-        }
-        $('#letterCardsInATable').append(newTr);
-     }
+      }
+      $('#letterCardsInATable').append(newTr);
+    }
   }
 
   function guessALetter(guess) {
@@ -187,7 +207,7 @@ $(document).ready(() => {
     }
   }
   // Functions===========================================
-  
+
   // Main Logic==========================================
 
   // //using the keyboard to type
@@ -198,7 +218,7 @@ $(document).ready(() => {
   //     setTimeout(roundState, 100);
   //   }
 
-  //   //if a keyboard letter is hit 
+  //   //if a keyboard letter is hit
   //   if (guess === $that) {
 
   //   }
@@ -224,4 +244,4 @@ $(document).ready(() => {
   // Main Logic==========================================
 
   //DO NOT CODE BENEATH THIS LINE
-  });
+});
