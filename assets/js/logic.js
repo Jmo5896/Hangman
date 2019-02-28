@@ -109,9 +109,9 @@ $(document).ready(() => {
       'y',
       'z'
     ];
-    console.log(lettersLeft);
-    console.log(randomWord);
-    console.log(lettersInWord);
+    // console.log(lettersLeft);
+    // console.log(randomWord);
+    // console.log(lettersInWord);
 
     //generate html
     $('#wins').text(wins);
@@ -119,6 +119,7 @@ $(document).ready(() => {
     $('#guessesLeft').text(guessesLeft);
     $('#lettersAndSpaces').text(lettersAndBlanks.join(' '));
     $('#letterCardsInATable').empty();
+    nooseToNeck = nooseStartingPoint;
     populateLetterButtons();
     
   }
@@ -164,14 +165,14 @@ $(document).ready(() => {
           lettersAndBlanks[index] = guess;
         }
       });
-      console.log(lettersInWord);
-      console.log(lettersAndBlanks);
+      // console.log(lettersInWord);
+      // console.log(lettersAndBlanks);
       $('#lettersAndSpaces').text(lettersAndBlanks.join(' '));
     } else {
       guessesLeft--;
       $('#guessesLeft').text(guessesLeft);
     }
-    console.log(guess);
+    // console.log(guess);
   }
 
   function roundState() {

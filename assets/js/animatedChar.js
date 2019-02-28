@@ -22,6 +22,88 @@ var breathAmt = 0;
 var breathMax = 2;
 var breathInterval = setInterval(updateBreath, 1000 / fps);
 
+//blinking
+var maxEyeHeight = 14;
+var curEyeHeight = maxEyeHeight;
+var eyeOpenTime = 0;
+var timeBtwBlinks = 4000;
+var blinkUpdateTime = 200;                    
+var blinkTimer = setInterval(updateBlink, blinkUpdateTime);
+
+//noose interaction
+var nooseStartingPoint = 800;
+var nooseToNeck = nooseStartingPoint;
+var guess1 = 700;
+var guess2 = 625;
+var guess3 = 525;
+var guess4 = 550;
+var guess5 = 555;
+var guess6 = 565;
+console.log(nooseToNeck);
+
+document.onclick = event => {
+    setTimeout(hangTheMan, 10);
+};
+
+function hangTheMan() {
+    console.log($('#guessesLeft').text());
+    if ($('#guessesLeft').text() == 6) {
+        lowerNoose(guess1);
+    } else if ($('#guessesLeft').text() == 5) {
+        lowerNoose(guess2);
+    } else if ($('#guessesLeft').text() == 4) {
+        lowerNoose(guess3);
+    } else if ($('#guessesLeft').text() == 3) {
+        raiseNoose(guess4);
+    } else if ($('#guessesLeft').text() == 2) {
+        raiseNoose(guess5);
+    } else if ($('#guessesLeft').text() == 2) {
+        raiseNoose(guess6);
+    } else if ($('#guessesLeft').text() == 1) {
+        
+    } else if ($('#guessesLeft').text() == 0) {
+        
+    } 
+}
+
+function lowerNoose(stoppingPoint) {
+    
+    if (nooseToNeck > stoppingPoint) {
+        nooseToNeck -= 1;
+        setTimeout(lowerNoose, 10, stoppingPoint);
+        
+    }
+}
+
+function raiseNoose(stoppingPoint) {
+    
+    if (nooseToNeck < stoppingPoint) {
+        nooseToNeck += 1;
+        setTimeout(raiseNoose, 10, stoppingPoint);
+        
+    }
+}
+
+function updateBlink() { 
+                        
+    eyeOpenTime += blinkUpdateTime;
+      
+    if(eyeOpenTime >= timeBtwBlinks){
+      blink();
+    }
+  }
+  
+  function blink() {
+  
+    curEyeHeight -= 1;
+    if (curEyeHeight <= 0) {
+      eyeOpenTime = 0;
+      curEyeHeight = maxEyeHeight;
+    } else {
+      setTimeout(blink, 10);
+    }
+  }
+
 function updateBreath() {
   if (breathDir === 1) {
     // breath in
@@ -44,17 +126,19 @@ function redraw() {
 
   canvasForChar.width = canvasForChar.width; // clears the canvas
 
-  drawEllipse(x + 56, y + 67, 160 - breathAmt, 6); // shadow
+  drawEllipse(x + 56, y + 97, 160 - breathAmt, 6); // shadow
 
-  context.drawImage(images['leftArm'], x - 345, y - 100 - breathAmt);
-  context.drawImage(images['legs'], x - 280, y - 118);
-  context.drawImage(images['torso'], x - 280, y - 75);
-  context.drawImage(images['rightArm'], x - 240, y - 45 - breathAmt);
-  context.drawImage(images['head'], x - 130, y - 185 - breathAmt);
-  context.drawImage(images['hair'], x - 37, y - 130 - breathAmt);
+  context.drawImage(images['leftArm'], x - 345, y - 70 - breathAmt);
+  context.drawImage(images['legs'], x - 280, y - 88);
+  context.drawImage(images['torso'], x - 280, y - 45);
+  context.drawImage(images['rightArm'], x - 240, y - 15 - breathAmt);
+  context.drawImage(images['noose'], x - 320, y - nooseToNeck - breathAmt);
+  context.drawImage(images['head'], x - 130, y - 155 - breathAmt);
+  context.drawImage(images['hair'], x - 37, y - 100 - breathAmt);
+  
 
-  drawEllipse(x + 68, y - 40 - breathAmt, 8, 14); // Left Eye
-  drawEllipse(x + 79, y - 40 - breathAmt, 8, 14); // Right Eye
+  drawEllipse(x + 68, y - 10 - breathAmt, 8, curEyeHeight); // Left Eye
+  drawEllipse(x + 79, y - 10 - breathAmt, 8, curEyeHeight); // Right Eye
 }
 
 function drawEllipse(centerX, centerY, width, height) {
@@ -104,5 +188,6 @@ loadImage('leftArm');
 loadImage('legs');
 loadImage('torso');
 loadImage('rightArm');
+loadImage('noose');
 loadImage('head');
 loadImage('hair');
