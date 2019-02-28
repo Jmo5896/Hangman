@@ -4,7 +4,7 @@
 var images = {};
 
 //track when the images have been loaded
-var totalResources = 6;
+var totalResources = 9;
 var numResourcesLoaded = 0;
 var fps = 30;
 
@@ -27,7 +27,7 @@ var maxEyeHeight = 14;
 var curEyeHeight = maxEyeHeight;
 var eyeOpenTime = 0;
 var timeBtwBlinks = 4000;
-var blinkUpdateTime = 200;                    
+var blinkUpdateTime = 200;
 var blinkTimer = setInterval(updateBlink, blinkUpdateTime);
 
 //noose interaction
@@ -39,70 +39,58 @@ var guess3 = 525;
 var guess4 = 550;
 var guess5 = 555;
 var guess6 = 565;
+var jumping = false;
 console.log(nooseToNeck);
 
 document.onclick = event => {
-    setTimeout(hangTheMan, 10);
+  setTimeout(hangTheMan, 10);
+  console.log(jumping);
 };
 
 function hangTheMan() {
-    console.log($('#guessesLeft').text());
-    if ($('#guessesLeft').text() == 6) {
-        lowerNoose(guess1);
-    } else if ($('#guessesLeft').text() == 5) {
-        lowerNoose(guess2);
-    } else if ($('#guessesLeft').text() == 4) {
-        lowerNoose(guess3);
-    } else if ($('#guessesLeft').text() == 3) {
-        raiseNoose(guess4);
-    } else if ($('#guessesLeft').text() == 2) {
-        raiseNoose(guess5);
-    } else if ($('#guessesLeft').text() == 2) {
-        raiseNoose(guess6);
-    } else if ($('#guessesLeft').text() == 1) {
-        
-    } else if ($('#guessesLeft').text() == 0) {
-        
-    } 
+  console.log($('#guessesLeft').text());
+  if ($('#guessesLeft').text() == 6) {
+    lowerNoose(guess1);
+  } else if ($('#guessesLeft').text() == 5) {
+    lowerNoose(guess2);
+  } else if ($('#guessesLeft').text() == 4) {
+    lowerNoose(guess3);
+  } else if ($('#guessesLeft').text() == 3) {
+    raiseNoose(guess4);
+  } 
 }
 
 function lowerNoose(stoppingPoint) {
-    
-    if (nooseToNeck > stoppingPoint) {
-        nooseToNeck -= 1;
-        setTimeout(lowerNoose, 10, stoppingPoint);
-        
-    }
+  if (nooseToNeck > stoppingPoint) {
+    nooseToNeck -= 1;
+    setTimeout(lowerNoose, 10, stoppingPoint);
+  }
 }
 
 function raiseNoose(stoppingPoint) {
-    
-    if (nooseToNeck < stoppingPoint) {
-        nooseToNeck += 1;
-        setTimeout(raiseNoose, 10, stoppingPoint);
-        
-    }
+  if (nooseToNeck < stoppingPoint) {
+    nooseToNeck += 1;
+    setTimeout(raiseNoose, 10, stoppingPoint);
+  }
 }
 
-function updateBlink() { 
-                        
-    eyeOpenTime += blinkUpdateTime;
-      
-    if(eyeOpenTime >= timeBtwBlinks){
-      blink();
-    }
+function updateBlink() {
+  eyeOpenTime += blinkUpdateTime;
+
+  if (eyeOpenTime >= timeBtwBlinks) {
+    blink();
   }
-  
-  function blink() {
-  
-    curEyeHeight -= 1;
-    if (curEyeHeight <= 0) {
-      eyeOpenTime = 0;
-      curEyeHeight = maxEyeHeight;
-    } else {
-      setTimeout(blink, 10);
-    }
+}
+
+function blink() {
+  curEyeHeight -= 1;
+  if (curEyeHeight <= 0) {
+    eyeOpenTime = 0;
+    curEyeHeight = maxEyeHeight;
+  } else {
+    setTimeout(blink, 10);
   }
+}
 
 function updateBreath() {
   if (breathDir === 1) {
@@ -124,18 +112,40 @@ function redraw() {
   var x = charX;
   var y = charY;
 
+  //start struggling
+  if ($('#guessesLeft').text() <= 2) {
+    jumping = true;
+  }
+
+    var jumpHeight = 45;
+
   canvasForChar.width = canvasForChar.width; // clears the canvas
 
-  drawEllipse(x + 56, y + 97, 160 - breathAmt, 6); // shadow
+  // shadow
+    if (jumping) {
+      drawEllipse(x + 56, y + 97, 100 - breathAmt, 4);
+    } else {
+      drawEllipse(x + 56, y + 97, 160 - breathAmt, 6);
+    }
 
-  context.drawImage(images['leftArm'], x - 345, y - 70 - breathAmt);
-  context.drawImage(images['legs'], x - 280, y - 88);
+    if (jumping) {
+      y -= jumpHeight;
+    }
+//   console.log(jumping);
+  if (jumping) {
+    context.drawImage(images['leftArm-bent'], x - 153, y - 55 - breathAmt);
+    context.drawImage(images['legs-dangle'], x - 195, y + 50);
+  } else {
+    context.drawImage(images['leftArm'], x - 345, y - 70 - breathAmt);
+    context.drawImage(images['legs'], x - 280, y - 88);
+  }
+
+  
   context.drawImage(images['torso'], x - 280, y - 45);
   context.drawImage(images['rightArm'], x - 240, y - 15 - breathAmt);
   context.drawImage(images['noose'], x - 320, y - nooseToNeck - breathAmt);
   context.drawImage(images['head'], x - 130, y - 155 - breathAmt);
   context.drawImage(images['hair'], x - 37, y - 100 - breathAmt);
-  
 
   drawEllipse(x + 68, y - 10 - breathAmt, 8, curEyeHeight); // Left Eye
   drawEllipse(x + 79, y - 10 - breathAmt, 8, curEyeHeight); // Right Eye
@@ -183,6 +193,9 @@ function loadImage(name) {
   };
   images[name].src = 'assets/images/' + name + '.png';
 }
+
+loadImage('leftArm-bent');
+loadImage('legs-dangle');
 
 loadImage('leftArm');
 loadImage('legs');
