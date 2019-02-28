@@ -1,6 +1,6 @@
 "use strict";
 $(document).ready(() => {
-  // Variables
+  // Variables===========================================
   const letterChoice = [
     'a',
     'b',
@@ -65,9 +65,9 @@ $(document).ready(() => {
   let guessedLetters = [];
   let lettersInWord = [];
   let lettersAndBlanks = [];
-  // Variables
+  // Variables===========================================
 
-  // Functions
+  // Functions===========================================
   function reset() {
     lettersInWord = [];
     lettersAndBlanks = [];
@@ -185,17 +185,26 @@ $(document).ready(() => {
       reset();
     }
   }
+  // Functions===========================================
+  
+  // Main Logic==========================================
 
-  // Functions
+  // //using the keyboard to type
+  // document.onkeyup = event => {
+  //   let guess = event.key;
+  //   if (letterChoice.includes(guess) && !guessedLetters.includes(guess)) {
+  //     guessALetter(guess);
+  //     setTimeout(roundState, 100);
+  //   }
 
-  // Main Logic
-  document.onkeyup = event => {
-    let guess = event.key;
-    if (letterChoice.includes(guess) && !guessedLetters.includes(guess)) {
-      guessALetter(guess);
-      setTimeout(roundState, 100);
-    }
-  };
+  //   //if a keyboard letter is hit 
+  //   if (guess === $that) {
+
+  //   }
+
+  // };
+
+  //clicking the cards
   $('#letterCardsInATable').on('click', '.letters', function() {
     //change the color when card is clicked
     let that = this;
@@ -211,7 +220,7 @@ $(document).ready(() => {
     }
   });
   reset();
-  // Main Logic
+  // Main Logic==========================================
 
   //DO NOT CODE BENEATH THIS LINE
   });

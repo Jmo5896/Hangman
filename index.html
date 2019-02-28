@@ -13,23 +13,32 @@
     />
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
-  <body id = "bootsrap-overrides">
-    <div class="container">
-      <h1>Hangman Game</h1>
-      <h2>You know how to play! instructions:</h2>
-      <ul>
-        <li>type a letter to see if it's in the word</li>
-        <li>guess the correct word before you run out of guesses</li>
-        <li>Have Fun!!!</li>
-      </ul>
-      <h3>Wins: <span id="wins"></span> | Losses: <span id="losses"></span></h3>
-      <br />
-      <h3>time remaining: (under construction)</h3>
-      <br />
-      <h3>guesses Remaining: <span id="guessesLeft"></span></h3>
-      <br />
-      <h2>Word: <span id="lettersAndSpaces"></span></h2>
-      <br />
+  <body id="bootsrap-overrides" class="bg-dark">
+    <div class="container bg-primary">
+      <div class="row">
+        <div class="col-md-2">
+          <h6>
+            Wins: <span id="wins"></span> | Losses: <span id="losses"></span>
+          </h6>
+          <h6>guesses Remaining: <span id="guessesLeft"></span></h6>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <h1 class="text-center">Hangman Game</h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+            <h2>Word: <span id="lettersAndSpaces"></span></h2>
+            <br />
+        </div>
+        <div class="col-md-8 bg-light">
+            <canvas id="canvasForChar" width="700" height="300"></canvas>
+        </div>
+      </div>
+
+     
       <h3>Letters:</h3>
       <table class="table">
         <tbody id="letterCardsInATable"></tbody>
@@ -43,5 +52,6 @@
       crossorigin="anonymous"
     ></script>
     <script type="text/javascript" src="./assets/js/logic.js"></script>
+    <script type="text/javascript" src="./assets/js/animatedChar.js"></script>
   </body>
 </html>
