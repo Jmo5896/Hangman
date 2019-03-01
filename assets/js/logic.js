@@ -1,21 +1,22 @@
 'use strict';
 $(document).ready(() => {
 
- //firebase stuff=========================================
+  //firebase stuff=========================================
   // Initialize Firebase
-  
-  // var config = {
-  //   apiKey: 'AIzaSyAxW2iGmglxkvddLyhztgU1Ar2TCl1GQJQ',
-  //   authDomain: 'hangman-eb602.firebaseapp.com',
-  //   databaseURL: 'https://hangman-eb602.firebaseio.com',
-  //   projectId: 'hangman-eb602',
-  //   storageBucket: '',
-  //   messagingSenderId: '810295666509'
-  // };
-  // firebase.initializeApp(config);
 
-  // let database = firebase.database();
-  // console.log(database);
+  var config = {
+    apiKey: 'AIzaSyAxW2iGmglxkvddLyhztgU1Ar2TCl1GQJQ',
+    authDomain: 'hangman-eb602.firebaseapp.com',
+    databaseURL: 'https://hangman-eb602.firebaseio.com',
+    projectId: 'hangman-eb602',
+    storageBucket: '',
+    messagingSenderId: '810295666509'
+  };
+  firebase.initializeApp(config);
+
+  let database = firebase.database();
+
+
   //firebase stuff=========================================
 
   // Variables===========================================
@@ -77,6 +78,11 @@ $(document).ready(() => {
   ];
   const wordBank = ['html', 'css', 'javascript', 'jquery', 'pikachu', 'swablu'];
   let randomWord = wordBank[Math.floor(Math.random() * wordBank.length)];
+  database.ref('pokemon').on('value', function (snapshot) {
+    console.log(snapshot.val()[Math.floor(Math.random() * 800)].name);
+    
+  });
+  // console.log(generatePokemon);
   let wins = 0;
   let losses = 0;
   let guessesLeft = 7;
@@ -128,7 +134,7 @@ $(document).ready(() => {
       'z'
     ];
     // console.log(lettersLeft);
-    // console.log(randomWord);
+    console.log(randomWord);
     // console.log(lettersInWord);
 
     //generate html
@@ -150,8 +156,8 @@ $(document).ready(() => {
         newTr.append(`
           <td>
             <div class="card rounded p-2 mx-auto letters" data-name="${
-              lettersLeft[i]
-            }" data-state="false">
+          lettersLeft[i]
+          }" data-state="false">
               <div class="card-body" >
                 <h5 class="text-center">${lettersLeft[i].toUpperCase()}</h5>
               </div>
@@ -162,8 +168,8 @@ $(document).ready(() => {
         newTr.append(`
           <td>
             <div class="card rounded p-2 mx-auto letters" data-name="${
-              lettersLeft[i]
-            }" data-state="false">
+          lettersLeft[i]
+          }" data-state="false">
               <div class="card-body" >
                 <h5 class="text-center">${lettersLeft[i].toUpperCase()}</h5>
               </div>
@@ -226,7 +232,7 @@ $(document).ready(() => {
   // };
 
   //clicking the cards
-  $('#letterCardsInATable').on('click', '.letters', function() {
+  $('#letterCardsInATable').on('click', '.letters', function () {
     //change the color when card is clicked
     let that = this;
     $(that).attr('data-state', true);
