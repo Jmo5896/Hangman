@@ -34,9 +34,16 @@ var config = {
 
     //cut out everything but the name, leaving a list of strings
     csvData.forEach(array => {
-      pokemonList.push(array.splice(1,1).pop());
+      let pokemon = array.splice(1,1).pop();
+      console.log('pokemon: ' + pokemon)
+      if (pokemon) {
+        if (!pokemon.includes(' ')) {
+          pokemonList.push(pokemon.toLowerCase());
+        }
+      }
     });
-
+    console.log(pokemonList);
+      
     //pushes names to database
     for (let i = 0; i < pokemonList.length; i++) {
       database.ref('pokemon').child(i).set({name: pokemonList[i]});
