@@ -135,18 +135,6 @@ $(document).ready(() => {
     }
     // console.log(guess);
   }
-
-  function roundState() {
-    if (lettersAndBlanks.join('') === lettersInWord.join('')) {
-      alert('You win!!!, the word was\n' + randomWord);
-      wins++;
-      reset();
-    } else if (guessesLeft === 0) {
-      alert('You Lose!!!, the word was\n' + randomWord);
-      losses++;
-      reset();
-    }
-  }
   //functions============================================
 
   //wrapped ALL other logic in this callback so that it waits for the word to be loaded
@@ -208,6 +196,19 @@ $(document).ready(() => {
       populateLetterButtons();
     }
 
+    //must live inside because it calls both reset and randomWord
+    function roundState() {
+      if (lettersAndBlanks.join('') === lettersInWord.join('')) {
+        alert('You win!!!, the word was\n' + randomWord);
+        wins++;
+        reset();
+      } else if (guessesLeft === 0) {
+        alert('You Lose!!!, the word was\n' + randomWord);
+        losses++;
+        reset();
+      }
+    }
+
     // Main Logic==========================================
 
     // //using the keyboard to type
@@ -233,7 +234,7 @@ $(document).ready(() => {
       let guess = $(that).data('name');
       if (!guessedLetters.includes(guess)) {
         guessALetter(guess);
-        setTimeout(roundState, 100);
+        setTimeout(roundState, 50);
       }
     });
     reset();

@@ -44,11 +44,11 @@ var jumping = false;
 
 document.onclick = event => {
   setTimeout(hangTheMan, 10);
-  console.log(jumping);
+  // console.log(jumping);
 };
 
 function hangTheMan() {
-  console.log($('#guessesLeft').text());
+  // console.log($('#guessesLeft').text());
   if ($('#guessesLeft').text() == 6) {
     lowerNoose(guess1);
   } else if ($('#guessesLeft').text() == 5) {
