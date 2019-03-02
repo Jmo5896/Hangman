@@ -40,7 +40,7 @@ var guess4 = 550;
 var guess5 = 555;
 var guess6 = 565;
 var jumping = false;
-console.log(nooseToNeck);
+// console.log(nooseToNeck);
 
 document.onclick = event => {
   setTimeout(hangTheMan, 10);

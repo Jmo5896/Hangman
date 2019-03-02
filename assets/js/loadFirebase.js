@@ -36,7 +36,7 @@ var config = {
     csvData.forEach(array => {
       let pokemon = array.splice(1,1).pop();
       console.log('pokemon: ' + pokemon)
-      if (pokemon) {
+      if (!pokemon==undefined) {
         if (!pokemon.includes(' ')) {
           pokemonList.push(pokemon.toLowerCase());
         }
