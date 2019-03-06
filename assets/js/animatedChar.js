@@ -4,7 +4,7 @@
 var images = {};
 
 //track when the images have been loaded
-var totalResources = 9;
+var totalResources = 10;
 var numResourcesLoaded = 0;
 var fps = 30;
 
@@ -57,7 +57,7 @@ function hangTheMan() {
     lowerNoose(guess3);
   } else if ($('#guessesLeft').text() == 3) {
     raiseNoose(guess4);
-  } 
+  }
 }
 
 function lowerNoose(stoppingPoint) {
@@ -117,35 +117,43 @@ function redraw() {
     jumping = true;
   }
 
-    var jumpHeight = 45;
+  var jumpHeight = 45;
 
   canvasForChar.width = canvasForChar.width; // clears the canvas
 
   // shadow
-    if (jumping) {
-      drawEllipse(x + 56, y + 97, 100 - breathAmt, 4);
-    } else {
-      drawEllipse(x + 56, y + 97, 160 - breathAmt, 6);
-    }
+  if (jumping) {
+    drawEllipse(x + 56, y + 97, 100 - breathAmt, 4);
+  } else {
+    drawEllipse(x + 56, y + 97, 160 - breathAmt, 6);
+  }
 
-    if (jumping) {
-      y -= jumpHeight;
-    }
-//   console.log(jumping);
+  if (jumping) {
+    y -= jumpHeight;
+  }
+  //   console.log(jumping);
   if (jumping) {
     context.drawImage(images['leftArm-bent'], x - 153, y - 55 - breathAmt);
     context.drawImage(images['legs-dangle'], x - 195, y + 50);
+    context.drawImage(images['torso'], x - 280, y - 45);
+    context.drawImage(images['noose'], x - 320, y - nooseToNeck - breathAmt);
+    context.drawImage(images['rightArm-bent'], x - 175, y - 70 - breathAmt);
+    context.drawImage(images['head'], x - 130, y - 155 - breathAmt);
+    context.drawImage(images['hair'], x - 37, y - 100 - breathAmt);
+
   } else {
     context.drawImage(images['leftArm'], x - 345, y - 70 - breathAmt);
     context.drawImage(images['legs'], x - 280, y - 88);
+    context.drawImage(images['torso'], x - 280, y - 45);
+    context.drawImage(images['rightArm'], x - 240, y - 15 - breathAmt);
+    context.drawImage(images['noose'], x - 320, y - nooseToNeck - breathAmt);
+    context.drawImage(images['head'], x - 130, y - 155 - breathAmt);
+    context.drawImage(images['hair'], x - 37, y - 100 - breathAmt);
+
   }
 
-  
-  context.drawImage(images['torso'], x - 280, y - 45);
-  context.drawImage(images['rightArm'], x - 240, y - 15 - breathAmt);
-  context.drawImage(images['noose'], x - 320, y - nooseToNeck - breathAmt);
-  context.drawImage(images['head'], x - 130, y - 155 - breathAmt);
-  context.drawImage(images['hair'], x - 37, y - 100 - breathAmt);
+
+
 
   drawEllipse(x + 68, y - 10 - breathAmt, 8, curEyeHeight); // Left Eye
   drawEllipse(x + 79, y - 10 - breathAmt, 8, curEyeHeight); // Right Eye
@@ -188,13 +196,14 @@ function resourceLoaded() {
 
 function loadImage(name) {
   images[name] = new Image();
-  images[name].onload = function() {
+  images[name].onload = function () {
     resourceLoaded();
   };
   images[name].src = 'assets/images/' + name + '.png';
 }
 
 loadImage('leftArm-bent');
+loadImage('rightArm-bent');
 loadImage('legs-dangle');
 
 loadImage('leftArm');
