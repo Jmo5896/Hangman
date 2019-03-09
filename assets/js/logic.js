@@ -1,7 +1,8 @@
 'use strict';
+
 $(document).ready(() => {
   //firebase stuff=========================================
-  
+
   // Initialize Firebase
   var config = {
     apiKey: 'AIzaSyAxW2iGmglxkvddLyhztgU1Ar2TCl1GQJQ',
@@ -14,7 +15,7 @@ $(document).ready(() => {
   firebase.initializeApp(config);
 
   let database = firebase.database();
-  //firebase stuff=========================================
+  //firebase stuff========================================= 
 
   // Variables===========================================
   const letterChoice = [
@@ -90,7 +91,7 @@ $(document).ready(() => {
         newTr = $('<tr>');
         newTr.append(`
         <td>
-          <div class="card rounded p-2 mx-auto letters" data-name="${
+          <div class="card rounded mx-auto letters" data-name="${
           lettersLeft[i]
           }" data-state="false">
             <div class="card-body" >
@@ -102,7 +103,7 @@ $(document).ready(() => {
       } else {
         newTr.append(`
         <td>
-          <div class="card rounded p-2 mx-auto letters" data-name="${
+          <div class="card rounded mx-auto letters" data-name="${
           lettersLeft[i]
           }" data-state="false">
             <div class="card-body" >
