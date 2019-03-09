@@ -4,7 +4,7 @@
 var images = {};
 
 //track when the images have been loaded
-var totalResources = 10;
+var totalResources = 14;
 var numResourcesLoaded = 0;
 var fps = 30;
 
@@ -23,7 +23,7 @@ var breathMax = 2;
 var breathInterval = setInterval(updateBreath, 1000 / fps);
 
 //blinking
-var maxEyeHeight = 14;
+var maxEyeHeight = 16;
 var curEyeHeight = maxEyeHeight;
 var eyeOpenTime = 0;
 var timeBtwBlinks = 4000;
@@ -40,6 +40,9 @@ var guess4 = 550;
 var guess5 = 555;
 var guess6 = 565;
 var jumping = false;
+var struggling = false;
+var dead = false;
+
 // console.log(nooseToNeck);
 
 document.onclick = event => {
@@ -113,8 +116,12 @@ function redraw() {
   var y = charY;
 
   //start struggling
-  if ($('#guessesLeft').text() <= 2) {
+  if ($('#guessesLeft').text() == 2) {
     jumping = true;
+  } else if ($('#guessesLeft').text() == 1) {
+    struggling = true;
+  } else if ($('#guessesLeft').text() == 0) {
+    dead = true;
   }
 
   var jumpHeight = 45;
@@ -132,16 +139,43 @@ function redraw() {
     y -= jumpHeight;
   }
   //   console.log(jumping);
-  if (jumping) {
+  if ((jumping) && (!struggling) && (!dead)) {
     context.drawImage(images['leftArm-bent'], x - 153, y - 55 - breathAmt);
-    context.drawImage(images['legs-dangle'], x - 195, y + 50);
-    context.drawImage(images['torso'], x - 280, y - 45);
+    context.drawImage(images['legs-dangle'], x - 195, y + 52 - breathAmt);
+    context.drawImage(images['torso'], x - 280, y - 45 - breathAmt);
     context.drawImage(images['noose'], x - 320, y - nooseToNeck - breathAmt);
     context.drawImage(images['rightArm-bent'], x - 175, y - 70 - breathAmt);
     context.drawImage(images['head'], x - 130, y - 155 - breathAmt);
     context.drawImage(images['hair'], x - 37, y - 100 - breathAmt);
 
-  } else {
+    drawEllipse(x + 68, y - 10 - breathAmt, 8, curEyeHeight); // Left Eye
+    drawEllipse(x + 79, y - 10 - breathAmt, 8, curEyeHeight); // Right Eye
+
+  } else if ((jumping) && (struggling) && (!dead)) {
+    context.drawImage(images['leftArm-bent'], x - 153 - breathAmt, y - 55);
+    context.drawImage(images['legs-limp'], x - 160 - breathAmt, y + 52);
+    context.drawImage(images['torso'], x - 280 - breathAmt, y - 45);
+    context.drawImage(images['noose'], x - 320 - breathAmt, y - nooseToNeck);
+    context.drawImage(images['rightArm-bent'], x - 175 - breathAmt, y - 70);
+    context.drawImage(images['head'], x - 130 - breathAmt, y - 155);
+    context.drawImage(images['hair'], x - 37 - breathAmt, y - 100);
+
+    drawEllipse(x + 68 - breathAmt, y - 10, 8, curEyeHeight); // Left Eye
+    drawEllipse(x + 79 - breathAmt, y - 10, 8, curEyeHeight); // Right Eye
+
+  } else if ((jumping) && (struggling) && (dead)) {
+    context.drawImage(images['leftArm-limp'], x - 350, y - 65);
+    context.drawImage(images['legs-limp'], x - 160, y + 52);
+    context.drawImage(images['torso'], x - 280, y - 45);
+    context.drawImage(images['noose'], x - 320, y - nooseToNeck);
+    context.drawImage(images['rightArm-limp'], x - 238, y - 18);
+    context.drawImage(images['head-limp'], x - 140, y - 155);
+    context.drawImage(images['hair-limp'], x - 50, y - 95);
+
+    // drawEllipse(x + 68, y - 10, 8, curEyeHeight); // Left Eye
+    // drawEllipse(x + 79, y - 10, 8, curEyeHeight); // Right Eye
+
+  } else  {
     context.drawImage(images['leftArm'], x - 345, y - 70 - breathAmt);
     context.drawImage(images['legs'], x - 280, y - 88);
     context.drawImage(images['torso'], x - 280, y - 45);
@@ -150,13 +184,10 @@ function redraw() {
     context.drawImage(images['head'], x - 130, y - 155 - breathAmt);
     context.drawImage(images['hair'], x - 37, y - 100 - breathAmt);
 
+    drawEllipse(x + 68, y - 10 - breathAmt, 8, curEyeHeight); // Left Eye
+    drawEllipse(x + 79, y - 10 - breathAmt, 8, curEyeHeight); // Right Eye
+
   }
-
-
-
-
-  drawEllipse(x + 68, y - 10 - breathAmt, 8, curEyeHeight); // Left Eye
-  drawEllipse(x + 79, y - 10 - breathAmt, 8, curEyeHeight); // Right Eye
 }
 
 function drawEllipse(centerX, centerY, width, height) {
@@ -202,6 +233,12 @@ function loadImage(name) {
   images[name].src = 'assets/images/' + name + '.png';
 }
 
+loadImage('head-limp');
+loadImage('hair-limp');
+loadImage('rightArm-limp');
+loadImage('leftArm-limp');
+loadImage('legs-inverse');
+loadImage('legs-limp');
 loadImage('leftArm-bent');
 loadImage('rightArm-bent');
 loadImage('legs-dangle');

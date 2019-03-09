@@ -193,6 +193,8 @@ $(document).ready(() => {
       $('#letterCardsInATable').empty();
       nooseToNeck = nooseStartingPoint;
       jumping = false;
+      struggling = false;
+      dead = false;
       populateLetterButtons();
     }
 
