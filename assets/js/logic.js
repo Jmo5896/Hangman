@@ -1,10 +1,19 @@
 'use strict';
 
 $(document).ready(() => {
-  //firebase stuff=========================================
+  $('#mainGame').hide();
+  $('#startBtn').on('click', function() {
+    $('#startingScreen').hide();
+    $('#mainGame').show();
+
+    mainGame();
+  })
+  //************************************
+  //*         firebase stuff           *
+  //************************************
 
   // Initialize Firebase
-  var config = {
+  const config = {
     apiKey: 'AIzaSyAxW2iGmglxkvddLyhztgU1Ar2TCl1GQJQ',
     authDomain: 'hangman-eb602.firebaseapp.com',
     databaseURL: 'https://hangman-eb602.firebaseio.com',
@@ -15,8 +24,10 @@ $(document).ready(() => {
   firebase.initializeApp(config);
 
   let database = firebase.database();
-  //firebase stuff========================================= 
-
+  //************************************
+  //*         firebase stuff           * 
+  //************************************  
+function mainGame(category='cities'){
   // Variables===========================================
   let abc = 'abcdefghijklmnopqrstuvwxyz'
   let lettersLeft = abc.split('');
@@ -83,8 +94,6 @@ $(document).ready(() => {
     // console.log(guess);
   }
   //functions============================================
-// let category = 'pokemon';
-let category = 'cities';
   //wrapped ALL other logic in this callback so that it waits for the word to be loaded
   database.ref(category).on('value', function (snapshot) {
     let randomWord = snapshot.val()[Math.floor(Math.random() * snapshot.val().length)].word;
@@ -130,9 +139,9 @@ let category = 'cities';
         reset();
       }
     }
-
-    // Main Logic==========================================
-
+    //************************************  
+    //*           Main Logic             *
+    //************************************
     //clicking the cards
     $('#letterCardsInATable').on('click', '.letters', function () {
       //change the color when card is clicked
@@ -148,7 +157,10 @@ let category = 'cities';
       }
     });
     reset();
-    // Main Logic==========================================
+    //************************************
+    //*           Main Logic             *
+    //************************************
   });
+}//main game bracket
   //DO NOT CODE BENEATH THIS LINE
 });
