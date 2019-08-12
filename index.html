@@ -15,11 +15,61 @@
   </head>
 
   <body id="bootsrap-overrides" class="bg-dark">
-
+    
+    <!--               STARTING FORM             -->
     <div id="startingScreen" class="container bg-primary">
-      <button id="startBtn" class="btn btn-lg btn-success">Start</button>
+        <form>
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                  <label>
+                    <input type="radio" name="Categories" class="card-input-element" value="pokemon"/>
+          
+                      <div class="panel panel-default card-input bg-light">
+                        <div class="panel-heading">Pokemon</div>
+                        <div class="panel-body">
+                          Product specific content
+                        </div>
+                      </div>
+          
+                  </label>
+                  
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                  
+                  <label>
+                    <input type="radio" name="Categories" class="card-input-element" value="cities"/>
+          
+                      <div class="panel panel-default card-input bg-light">
+                        <div class="panel-heading">Cities</div>
+                        <div class="panel-body">
+                          Product specific content
+                        </div>
+                      </div>
+                  </label>
+                  
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                  
+                  <label>
+                    <input type="radio" name="Categories" class="card-input-element" disabled/>
+          
+                      <div class="panel panel-default card-input bg-secondary">
+                        <div class="panel-heading">Product C</div>
+                        <div class="panel-body">
+                          Product specific content
+                        </div>
+                      </div>
+                  </label>
+                  
+                </div>
+            </div>
+            <button type="submit" id="startBtn" class="btn btn-lg btn-success">Start</button>
+          </form>
+      
     </div>
+    <!--               STARTING FORM             -->
 
+    <!--                 MAIN GAME                 -->
     <div id="mainGame" class="container bg-primary">
       <div class="row">
         <div class="col-md-2">
@@ -50,6 +100,7 @@
       </table>
       <br />
     </div>
+    <!--                 MAIN GAME                 -->
 
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-database.js"></script>
