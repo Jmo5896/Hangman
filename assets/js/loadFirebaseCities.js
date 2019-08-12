@@ -11,14 +11,14 @@ var config = {
   let database = firebase.database();
 
   $.ajax({
-    url: 'assets/dbFiles/pokemonWordBank/pokemon.csv',
+    url: 'assets/dbFiles/worldCities/worldcities.csv',
     dataType: 'text',
   }).done(successFunction);
   
   
   var csvData = [];
-  var pokemonList = [];
-  var pokemonListOfObjects = [];
+  var cityList = [];
+  var cityListOfObjects = [];
 
   function successFunction(data) {
     var allRows = data.split(/\r?\n|\r/);//makes each row a string
@@ -34,19 +34,22 @@ var config = {
 
     //cut out everything but the name, leaving a list of strings
     csvData.forEach(array => {
-      let pokemon = array.splice(1,1).pop();
-      console.log('pokemon: ' + pokemon)
-      if (!(pokemon==undefined)) {
-        if (!pokemon.includes(' ')) {
-          pokemonList.push(pokemon.toLowerCase());
+      let city = array.splice(1,1).pop();
+      // console.log('city: ' + city)
+      if (!(city==undefined)) {
+        city= city.toLowerCase().trim();
+        
+        if (!city.includes(' ')) {
+          console.log('city: ' + city);
+            cityList.push(city.replace(/"/g,''));
         }
       }
     });
-    console.log(pokemonList);
+    console.log(cityList);
       
     //pushes names to database
-    for (let i = 0; i < pokemonList.length; i++) {
-      database.ref('pokemon').child(i).set({word: pokemonList[i]});
+    for (let i = 0; i < cityList.length; i++) {
+      database.ref('cities').child(i).set({word: cityList[i]});
     }
     
 

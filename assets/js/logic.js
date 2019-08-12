@@ -18,62 +18,8 @@ $(document).ready(() => {
   //firebase stuff========================================= 
 
   // Variables===========================================
-  const letterChoice = [
-    'a',
-    'b',
-    'c',
-    'd',
-    'e',
-    'f',
-    'g',
-    'h',
-    'i',
-    'j',
-    'k',
-    'l',
-    'm',
-    'n',
-    'o',
-    'p',
-    'q',
-    'r',
-    's',
-    't',
-    'u',
-    'v',
-    'w',
-    'x',
-    'y',
-    'z'
-  ];
-  let lettersLeft = [
-    'a',
-    'b',
-    'c',
-    'd',
-    'e',
-    'f',
-    'g',
-    'h',
-    'i',
-    'j',
-    'k',
-    'l',
-    'm',
-    'n',
-    'o',
-    'p',
-    'q',
-    'r',
-    's',
-    't',
-    'u',
-    'v',
-    'w',
-    'x',
-    'y',
-    'z'
-  ];
+  let abc = 'abcdefghijklmnopqrstuvwxyz'
+  let lettersLeft = abc.split('');
   let wins = 0;
   let losses = 0;
   let guessesLeft = 7;
@@ -137,16 +83,17 @@ $(document).ready(() => {
     // console.log(guess);
   }
   //functions============================================
-
+// let category = 'pokemon';
+let category = 'cities';
   //wrapped ALL other logic in this callback so that it waits for the word to be loaded
-  database.ref('pokemon').on('value', function (snapshot) {
-    let randomWord = snapshot.val()[Math.floor(Math.random() * 672)].name;
+  database.ref(category).on('value', function (snapshot) {
+    let randomWord = snapshot.val()[Math.floor(Math.random() * snapshot.val().length)].word;
     // console.log('initial randomWord: ' + randomWord);
 
     function reset() {
       lettersInWord = [];
       lettersAndBlanks = [];
-      randomWord = snapshot.val()[Math.floor(Math.random() * 672)].name; //reset HAS TO live inside because of this line
+      randomWord = snapshot.val()[Math.floor(Math.random() * 672)].word; //reset HAS TO live inside because of this line
       guessesLeft = 7;
       guessedLetters = [];
       lettersInWord = randomWord.split('');
@@ -154,34 +101,6 @@ $(document).ready(() => {
       lettersInWord.forEach(letter => {
         lettersAndBlanks.push('_');
       });
-      lettersLeft = [
-        'a',
-        'b',
-        'c',
-        'd',
-        'e',
-        'f',
-        'g',
-        'h',
-        'i',
-        'j',
-        'k',
-        'l',
-        'm',
-        'n',
-        'o',
-        'p',
-        'q',
-        'r',
-        's',
-        't',
-        'u',
-        'v',
-        'w',
-        'x',
-        'y',
-        'z'
-      ];
       // console.log(lettersLeft);
       // console.log('reset func randomWord: ' + randomWord);
       // console.log(lettersInWord);
@@ -213,18 +132,6 @@ $(document).ready(() => {
     }
 
     // Main Logic==========================================
-
-    // //using the keyboard to type
-    // document.onkeyup = event => {
-    //   let guess = event.key;
-    //   if (letterChoice.includes(guess) && !guessedLetters.includes(guess)) {
-    //     guessALetter(guess);
-    //     setTimeout(roundState, 100);
-    //   }
-    //   //if a keyboard letter is hit
-    //   if (guess === $that) {
-    //   }
-    // };
 
     //clicking the cards
     $('#letterCardsInATable').on('click', '.letters', function () {

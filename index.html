@@ -1,56 +1,112 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Hangman</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Hangman</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
-  <link rel="stylesheet" href="./assets/css/style.css" />
-</head>
-
-<body id="bootsrap-overrides" class="bg-dark">
-
-  <div class="container bg-primary">
-    <div class="row">
-      <div class="col-md-2">
-        <h6>
-          Wins: <span id="wins"></span> | Losses: <span id="losses"></span>
-        </h6>
-        <h6>guesses Remaining: <span id="guessesLeft"></span></h6>
-      </div>
-      <div class="col-md-2"></div>
-      <div class="col-md-4">
-        <h1 class="text-center">Hangman Game</h1>
+  <body id="bootsrap-overrides" class="bg-dark">
+    <!--***************************************-->
+    <!--*           Starting Modal            *-->
+    <!--***************************************-->
+    <div
+      class="modal fade"
+      id="startModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="startBtnLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="startBtnLabel">
+              let's get Started!!!
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <button
+              id="startBtn"
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Start
+            </button>
+          </div>
+        </div>
       </div>
     </div>
+    <!--***************************************-->
+    <!--*        End of Starting Modal        *-->
+    <!--***************************************-->
+    <div class="container bg-primary">
+      <div class="row">
+        <div class="col-md-2">
+          <h6>
+            Wins: <span id="wins"></span> | Losses: <span id="losses"></span>
+          </h6>
+          <h6>guesses Remaining: <span id="guessesLeft"></span></h6>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <h1 class="text-center">Hangman Game</h1>
+        </div>
+      </div>
 
-    <div class="row">
-      <div class="col-md-4">
-        <h2>Word: <span id="lettersAndSpaces"></span></h2>
-        <br />
+      <div class="row">
+        <div class="col-md-4">
+          <h2>Word: <span id="lettersAndSpaces"></span></h2>
+          <br />
+        </div>
+        <div class="col-md-8 bg-light">
+          <canvas id="canvasForChar" width="700" height="285"></canvas>
+        </div>
       </div>
-      <div class="col-md-8 bg-light">
-        <canvas id="canvasForChar" width="700" height="285"></canvas>
-      </div>
+
+      <h3>Letters:</h3>
+      <table class="table">
+        <tbody id="letterCardsInATable"></tbody>
+      </table>
+      <br />
     </div>
 
-
-    <h3>Letters:</h3>
-    <table class="table">
-      <tbody id="letterCardsInATable"></tbody>
-    </table>
-    <br />
-  </div>
-
-  <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <!-- <script type="text/javascript" src="./assets/js/loadFirebase.js"></script> -->
-  <script type="text/javascript" src="./assets/js/logic.js"></script>
-  <script type="text/javascript" src="./assets/js/animatedChar.js"></script>
-</body>
-
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script type="text/javascript" src="./assets/js/loadFirebase.js"></script> -->
+    <!-- <script type="text/javascript" src="./assets/js/loadFirebaseCities.js"></script> -->
+    <script type="text/javascript" src="./assets/js/logic.js"></script>
+    <script type="text/javascript" src="./assets/js/animatedChar.js"></script>
+  </body>
 </html>
